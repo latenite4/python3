@@ -4,6 +4,13 @@
 #date: 12/20/20
 
 python projects are python3:
+
+hangman files: hangman.py,words.py
+wordlist from: https://www.randomlists.com/data/words.json
+run: python3 hangman.py
+
+
+
 TicTacToe files: player.py, game.py
 run: python3 game.py
 
