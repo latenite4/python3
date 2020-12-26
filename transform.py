@@ -1,7 +1,7 @@
 
 from image import Image
 import numpy as np
-import time
+import time, os
 
 def adjust_brightness(image,factor):
   #scale each value by some amount
@@ -85,7 +85,21 @@ def combine_images(image1, image2):
                 new_im.array[x, y, c] = (image1.array[x, y, c]**2 + image2.array[x, y, c]**2)**0.5
     return new_im
 
+
+def check_output():
+  #check to verify that output dir exists:
+  path = 'output/'
+  is_path = os.path.isfile(path)  
+  if not is_path:
+    print('local ./output dir must exist, cannot continue...')
+    print(quit)
+    quit()
+
+    
 if __name__ == '__main__':
+
+  check_output()
+
   lake = Image(filename = 'lake.png')
   city = Image(filename='city.png')
   start_time = time.time()
