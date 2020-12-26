@@ -86,19 +86,32 @@ def combine_images(image1, image2):
     return new_im
 
 
-def check_output():
-  #check to verify that output dir exists:
-  path = 'output/'
-  is_path = os.path.isfile(path)  
+def check_env():
+  #check to verify that output/input dirs exist:
+  path = './output/'
+  is_path = os.path.isdir(path)  
   if not is_path:
     print('local ./output dir must exist, cannot continue...')
     print(quit)
     quit()
+  #verify output is writeable
+  is_w = os.access(path, os.W_OK) 
+  if not is_w:
+    print('local ./output dir must be writeable, cannot continue...')
+    print(quit)
+    quit()
 
-    
+  path = './input/'
+  is_path = os.path.isdir(path)  
+  if not is_path:
+    print('local ./input dir must exist, cannot continue...')
+    print(quit)
+    quit()
+
+
 if __name__ == '__main__':
 
-  check_output()
+  check_env()
 
   lake = Image(filename = 'lake.png')
   city = Image(filename='city.png')

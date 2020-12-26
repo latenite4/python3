@@ -1,5 +1,8 @@
 # Prerequisites
 *.d
+*.bak
+output/*
+input/*
 
 # Object files
 *.o
