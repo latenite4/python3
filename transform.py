@@ -111,7 +111,7 @@ def show_image(in_image):
   imgplot = plt.imshow(img)
   plt.show()
 
-# check for necessary parts of the run time environment
+# check for necessary parts of the runtime environment
 def check_env( in_image):
   #check to verify that output/input dirs exist:
   path = './output/'
