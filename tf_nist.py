@@ -9,7 +9,7 @@
 import tensorflow as tf
 from matplotlib import pyplot as plt
 import numpy as np
-import time
+import time,sys
 
 objects = tf.keras.datasets.mnist    # many images of digits 0-9
 (training_images, training_labels),(test_images,test_labels) = objects.load_data()
@@ -17,7 +17,6 @@ objects = tf.keras.datasets.mnist    # many images of digits 0-9
 
 #print some of the digit images
 for i in range(9):
-#define subplot
   plt.subplot(330+1+i)
   plt.imshow(training_images[i])
 
@@ -51,6 +50,8 @@ print(f'test duration: {time.time() - start_test_time}s')
 #show first image from test data
 plt.imshow(test_images[0])
 prediction=m.predict(test_images)  # do all test images
-print(np.argmax(prediction[0]))
+print('predicted number: ',np.argmax(prediction[0]))
+print(f'\n\ntensorFlow semVer: ',{tf.__version__})
+print('python version: ',sys.version_info)
 
 
