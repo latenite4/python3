@@ -17,7 +17,11 @@ local input and output directories required.
 this program uses png file as input and can mark edges, blue image and pass kernel over image.
 run: python3 transform.py
 
+tensorflow files: tf_nist.py
+python program using keras library to create model for NIST digits.
+TF 2.4.0 training 10s
 
+on RPi4 using TF 1.14, training 63.4s
 
 
 
