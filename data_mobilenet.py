@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+
+#this program is only run by the try.sh script.
+
 #this python3 program will organize the signed digit samples for
 # mobilenet model training
 #2 testing
@@ -29,7 +32,7 @@ import matplotlib.pyplot as pyplot
 
 
 #constants for this program
-INPUT_DATA='/home/user01/Downloads/data/signed_digits/Sign-Language-Digits-Dataset/Dataset/'
+INPUT_DATA='/home/user01/Downloads/data/sd/Sign-Language-Digits-Dataset/Dataset'
 OUTPUT_DATA='/home/user01/g/python3/data/sd/'
 EXEC_DIR='/home/user01/g/python3'
 #this is where the data currently lives on local disk
@@ -42,39 +45,33 @@ IMG_WIDTH=224
 
 BATCH_SIZE=10
 
-# prepare image for mobilenet
-def prepare_image(file):
-  im_path  = 'data/MobileNet-samples/'
-  im = image.load_img(im_path+file,target_size=(224,224))
-  im_array = image.img_to_array(im)
-  im_array_ext_dims = np.expand_dims(im_array,axis=0)
-  #scale RGB to values from -1 to 1 in the image
-  return tf.keras.applications
-
-
 if __name__ == '__main__':
-
-  img=''
-  os.chdir(OUTPUT_DATA)
-  #have we run this script before?
   try:
-    if os.path.isdir(OUTPUT_DATA+'/0') is False:
+    if os.path.exists(OUTPUT_DATA+'/0') is False:
       print('reformatting data for mobilenet')
+      os.chdir(OUTPUT_DATA)
 
-      os.chdir(EXEC_DIR)
-      os.mkdir('data/sd/train')
-      os.mkdir('data/sd/valid')
-      os.mkdir('data/sd/test')
 
       for i in range(0,10):
-        print(f'...reformatting data digit: {i}')
+        print(f'\nreformatting data digit: {i}')
         # make sample input for validity testing
-        print(f'source dir: {INPUT_DATA}{i}/')
-        valid_samples = random.sample(os.listdir(f'{INPUT_DATA}{i}/'),30)
-        print(f'valid samples for: {i} {valid_samples}')
-        #move valid images
+        print(f'source dir: {INPUT_DATA}/{i}/')
+        valid_samples = random.sample(os.listdir(f'{INPUT_DATA}/{i}/'),30)
+        print(f'>valid samples for: {i} {valid_samples}')
         for v in valid_samples:
-          shutil.move(f'{INPUT_DATA}{i}/{v}',f'{OUTPUT_DATA}/valid/{i}/{v}')
+          os.system(f"mv {INPUT_DATA}/{i}/{v}  {OUTPUT_DATA}/valid/{i}")
+        
+        test_samples = random.sample(os.listdir(f'{INPUT_DATA}/{i}/'),5)
+        print(f'>>test samples for: {i} {test_samples}')
+        for t in test_samples:
+          os.system(f"mv {INPUT_DATA}/{i}/{t}  {OUTPUT_DATA}/test/{i}")
+        
+        train_samples = os.listdir(f'{INPUT_DATA}/{i}/')
+        print(f'>>>train samples for: {i} {train_samples}')
+      
+        #the shutil.move() python function does not work
+        for tr in train_samples:
+          os.system(f"mv {INPUT_DATA}/{i}/{tr}  {OUTPUT_DATA}/train/{i}")
 
     else:
       print('data formatting has already been done; you don\'t need to do it again')
@@ -93,7 +90,7 @@ if __name__ == '__main__':
     assert train_batches.num_classes == valid_batches.num_classes == test_batches.num_classes == BATCH_SIZE
 
   except TypeError:
-    print("expected error:", sys.exc_info()[0],"  file:",img)
+    print("expected error:", sys.exc_info()[0])
 
   print('finished data formatting...')
   quit()
