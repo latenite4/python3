@@ -1,5 +1,6 @@
 #!/bin/bash
 # this script will create data for signed digits data for use with mobilenet.
+# after running try.sh, you should run 'python3 tf_mobilenet.ph'
 
 set -x
 set -o nounset

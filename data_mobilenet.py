@@ -70,6 +70,7 @@ if __name__ == '__main__':
         print(f'>>>train samples for: {i} {train_samples}')
       
         #the shutil.move() python function does not work
+        #remaining images are for training
         for tr in train_samples:
           os.system(f"mv {INPUT_DATA}/{i}/{tr}  {OUTPUT_DATA}/train/{i}")
 

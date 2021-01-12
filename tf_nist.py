@@ -8,9 +8,11 @@
 # you will need sudo apt install nvidia-cuda-toolkit
 
 import tensorflow as tf
+from tensorflow import keras
 from matplotlib import pyplot as plt
 import numpy as np
-import time,sys
+import time,sys,os,platform,distro
+from tensorflow.python.client import device_lib
 
 
 #try to install TF 2 if it will run on this HW
@@ -21,8 +23,21 @@ import time,sys
 #   print('could not install TF 2')
 #   pass
 
+def show_versions_info():
+  #import time,sys,os,platform,distro
+  print("keras version: ",keras.__version__)
+  print("tensorflow version: ",tf.__version__)
+  print(f"python version: {platform.python_version()}")
+  print(f"Linux distribution: {distro.linux_distribution()}")
+  print(f'Operating system kernel: {platform.platform()}')
+  #version of NVIDIA CUDA
+  print(f'NVIDIA CUDA version:')
+  os.system(f"nvcc --version")
+  print(f'\n')
+
+
 #see if GPU is available
-physical_devices = tf.config.experimental.list_physical_devices('/GPU:0')
+physical_devices = tf.config.experimental.list_physical_devices('GPU')
 print('num GPUs ',len(physical_devices))
 # if len(physical_devices) > 0:
 #   tf.config.experimental.set_memory_growth(physical_devices[0],True)
@@ -30,6 +45,9 @@ print('num GPUs ',len(physical_devices))
 objects = tf.keras.datasets.mnist    # many images of digits 0-9
 (training_images, training_labels),(test_images,test_labels) = objects.load_data()
 
+device_lib.list_local_devices()
+
+show_versions_info()
 
 #print some of the digit images
 for i in range(9):
@@ -72,8 +90,6 @@ print(f'test duration: {time.time() - start_test_time}s')
 plt.imshow(test_images[0])
 prediction=m.predict(test_images)  # do all test images
 print('predicted number: ',np.argmax(prediction[0]))
-print(f'\n\ntensorFlow semVer: ',{tf.__version__})
-print(f'python version: ',{sys.version})
 
 
 
