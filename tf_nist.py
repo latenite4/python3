@@ -11,7 +11,7 @@ import tensorflow as tf
 from tensorflow import keras
 from matplotlib import pyplot as plt
 import numpy as np
-import time,sys,os,platform,distro
+import time,sys,os,platform,distro,vers
 from tensorflow.python.client import device_lib
 
 
@@ -23,17 +23,8 @@ from tensorflow.python.client import device_lib
 #   print('could not install TF 2')
 #   pass
 
-def show_versions_info():
-  #import time,sys,os,platform,distro
-  print("keras version: ",keras.__version__)
-  print("tensorflow version: ",tf.__version__)
-  print(f"python version: {platform.python_version()}")
-  print(f"Linux distribution: {distro.linux_distribution()}")
-  print(f'Operating system kernel: {platform.platform()}')
-  #version of NVIDIA CUDA
-  print(f'NVIDIA CUDA version:')
-  os.system(f"nvcc --version")
-  print(f'\n')
+if __name__ == '__main__':
+  vers.show_versions_info()
 
 
 #see if GPU is available
@@ -46,8 +37,6 @@ objects = tf.keras.datasets.mnist    # many images of digits 0-9
 (training_images, training_labels),(test_images,test_labels) = objects.load_data()
 
 device_lib.list_local_devices()
-
-show_versions_info()
 
 #print some of the digit images
 for i in range(9):
