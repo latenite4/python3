@@ -2,6 +2,8 @@
 # image filter to seperate cat and dog images from google crash course in ML:
 #   https://colab.research.google.com/github/google/eng-edu/blob/main/ml/pc/exercises/image_classification_part1.ipynb?utm_source=practicum-IC&utm_campaign=colab-external&utm_medium=referral&hl=en&utm_content=imageexercise1-colab#scrollTo=DmtkTn06pKxF
 # jupyter notebook: https://colab.research.google.com/github/google/eng-edu/blob/main/ml/pc/exercises/image_classification_part1.ipynb?utm_source=practicum-IC&utm_campaign=colab-external&utm_medium=referral&hl=en&utm_content=imageexercise1-colab#scrollTo=-5tES8rXFjux
+# many routines are taken from crash course at https://colab.research.google.com/github/google/eng-edu/blob/main/ml/pc/exercises/image_classification_part1.ipynb?utm_source=practicum-IC&utm_campaign=colab-external&utm_medium=referral&hl=en&utm_content=imageexercise1-colab#scrollTo=Sn9m9D3UimHM
+
 # Name: R. Melton
 # date: 1/21/2021
 
@@ -27,7 +29,7 @@ import matplotlib.image as mpimg
 from tensorflow.keras import layers
 from tensorflow.keras import Model
 from tensorflow.keras.optimizers import RMSprop
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+#from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 
 
@@ -41,6 +43,8 @@ NUM_EPOCHS=7 #number of training epochs
 
 #plot accuracy and loss
 def plot_performance():
+
+  print('--------------- plot performance ---------------------')
   # Retrieve a list of accuracy results on training and validation data
   # sets for each training epoch
   acc = history.history['acc']
