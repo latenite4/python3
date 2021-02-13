@@ -9,18 +9,15 @@
 
 import alpaca_trade_api as tradeapi
 
-if __name__ == '__main__':
+#function to check if market is open
+def check_open():
   api = tradeapi.REST()
 
   # Check if the market is open now.
   clock = api.get_clock()
-  print('The market is {}'.format('open.' if clock.is_open else 'closed.'))
 
-  # Check when the market was open on Dec. 1, 2018
-  date = '2021-02-01'
-  calendar = api.get_calendar(start=date, end=date)[0]
-  print('The market opened at {} and closed at {} on {}.'.format(
-    calendar.open,
-    calendar.close,
-    date
-  ))
+  print('The market is {}'.format('open.' if clock.is_open else 'closed.'))
+  return ('1' if clock.is_open else '0')
+
+if __name__ == '__main__':
+  check_open()
