@@ -44,10 +44,10 @@ if __name__ == '__main__':
   syms1=["AAPL", "T", "GOOGL", "AMZN", "FB", "NVDA","INTC","QCOM","VMW","VZ","TSLA"]
   syms2=["GM", "USA", "PEP", "TGT", "WMT"]
 
-  if get_market.check_open() == '1':
-    get_market_list(syms1)
-    get_market_list(syms2)
-    test_yahoo('AAPL')
+  #if get_market.check_open() == '1':
+  get_market_list(syms1)
+  get_market_list(syms2)
+  test_yahoo('AAPL')
 
   #syms=["AAPL", "T", "GOOGL", "AMZN", "FB"]
 
