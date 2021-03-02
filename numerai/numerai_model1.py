@@ -1,3 +1,6 @@
+
+
+
 #!/usr/bin/env python
 """
 numerai_model1.py: Example classifier on Numerai data using a xgboost regression.
@@ -9,7 +12,7 @@ To get started, install the required packages: pip install pandas numpy sklearn 
 #cmd: python numerai_model1.py
 
 
-import csv,time,time,sys
+import csv,time,time,sys, os
 from datetime import datetime
 from pathlib import Path
 
@@ -21,7 +24,7 @@ import xgboost as xgb
 TARGET_NAME = f"target"
 PREDICTION_NAME = f"prediction"
 
-MODEL_FILE = Path("example_model.xgb")
+MODEL_FILE = Path("numerai_model1.xgb")
 MODEL = "model1"
 
 
@@ -79,6 +82,23 @@ def main():
     print(">model start time: {} {}  {}".format(MODEL,subfilename,current_time))
     print(">Loading data...@{:12.2f}s".format(start_time))
     # The training data is used to train your model how to predict the targets.
+    MODEL_TRAINING_FILE = Path("numerai_training_data.csv")
+    TOURNAMENT_FILE = Path("numerai_training_data.csv")
+    PREDICTIONS_FILE = Path("example_predictions.csv")
+
+    if not TOURNAMENT_FILE.is_file:
+        print('tournament data file not found in this dir; cannot continue')
+        os.exit(1)
+
+    if not MODEL_TRAINING_FILE.is_file:
+        print('training data file not found in this dir; cannot continue')
+        os.exit(1)
+    
+    if not PREDICTIONS_FILE.is_file:
+        print('predictions file not found in this dir; cannot continue')
+        os.exit(1)
+    
+
     training_data = read_csv("numerai_training_data.csv")
     ts,tf =training_data.shape
     print('>training shape: rows {}  cols {}'.format(ts,tf))
@@ -89,14 +109,12 @@ def main():
         f for f in training_data.columns if f.startswith("feature")
     ]
 
-    #print(">Loaded {} features @{:12.2f}s".format(len(feature_names),time.time()))
-
     # This is the model that generates the included example predictions file.
     # Taking too long? Set learning_rate=0.1 and n_estimators=200 to make this run faster.
     # Remember to delete example_model.xgb if you change any of the parameters below.
     model = XGBRegressor(verbosity=1,max_depth=5, learning_rate=0.01, n_estimators=2000, n_jobs=-1, colsample_bytree=0.1)
-    #model.summary()
-    if not MODEL_FILE.is_file():
+
+    if MODEL_FILE.is_file():
         print(">Loading pre-trained model...@{:12.2f}s".format(time.time()))
         model.load_model(MODEL_FILE)
     else:
@@ -108,7 +126,7 @@ def main():
 
     # Generate predictions on both training and tournament data
     
-    print(">Generating predictions...@{}  {}".format(time.time(),subfilename))
+    print(">Generating predictions...@{:12.2f}  {}".format(time.time(),subfilename))
     training_data[PREDICTION_NAME] = model.predict(training_data[feature_names])
     tournament_data[PREDICTION_NAME] = model.predict(tournament_data[feature_names])
 
@@ -270,3 +288,4 @@ def get_feature_neutral_mean(df):
 
 if __name__ == '__main__':
     main()
+
